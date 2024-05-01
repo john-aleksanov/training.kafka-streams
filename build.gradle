@@ -8,9 +8,15 @@ repositories {
 
 ext {
     kafkaVersion = '3.7.0'
+    slf4jVersion = '2.0.7'
+    log4jVersion = '2.23.1'
+    jacksonVersion = '2.16.0'
 }
 
 dependencies {
     implementation "org.apache.kafka:kafka-clients:$kafkaVersion"
-    implementation "org.apache.kafka:kafka:$kafkaVersion"
+    implementation "org.apache.kafka:kafka-streams:$kafkaVersion"
+    implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    implementation "org.apache.logging.log4j:log4j-slf4j2-impl:$log4jVersion"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
 }
