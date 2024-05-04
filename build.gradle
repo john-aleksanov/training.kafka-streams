@@ -11,6 +11,8 @@ ext {
     slf4jVersion = '2.0.7'
     log4jVersion = '2.23.1'
     jacksonVersion = '2.16.0'
+    junitVersion = '5.10.2'
+    assertjVersion = '3.25.3'
 }
 
 dependencies {
@@ -19,4 +21,16 @@ dependencies {
     implementation "org.slf4j:slf4j-api:$slf4jVersion"
     implementation "org.apache.logging.log4j:log4j-slf4j2-impl:$log4jVersion"
     implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+
+    testImplementation "org.apache.kafka:kafka-streams-test-utils:$kafkaVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    testImplementation "org.apache.logging.log4j:log4j-core:$log4jVersion"
+    testImplementation "org.assertj:assertj-core:$assertjVersion"
+
+    testAnnotationProcessor "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+}
+
+test {
+    useJUnitPlatform()
 }
