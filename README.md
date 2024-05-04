@@ -170,3 +170,53 @@ docker exec -it kafka3 kafka-console-consumer.sh --bootstrap-server kafka3:19092
 6. Input messages via the producers in the format "key:value" and verify that messages with the same key within any 60-second window indeed
    get joined and logged to the console.
 
+## Task 4: Custome SerDe
+
+### Objective
+
+Implement a custom serializer / deserializer that translates the json of the below format to / from a Java object.
+```json
+{
+   "name":"Mike Ross",
+   "company":"Pearson Specter",
+   "position":"Associate",
+   "experience": 5
+}
+```
+Cover the implementation with tests.
+
+### Implementation
+
+See package `dev.marvel.kafkastreams.task4`.
+
+- `Person` is a DTO class mirroring the above JSON structure.
+- `PersonSerDe` is the custom Kafka serializer / deserializer implementing the functionality.
+- `PersonSerDeApp` is the entrypoint to the application. It creates a simple topology consisting of a Kafka topic source, a filtering
+  processor that filters out `null`-valued messages, and a processor that prints the message value to the console.
+
+### How to run
+
+1. Run the [compose.yml](./compose.yml) file in the root directory to run a local Kafka cluster with three Kafka brokers:
+
+```shell
+docker compose up
+```
+
+2. Set up a topic within the Kafka cluster:
+
+```shell
+docker exec -it kafka3 kafka-topics.sh --create --bootstrap-server kafka3:19092 --topic task4 --partitions 3 --replication-factor 2
+```
+
+3. Run the application from your favorite IDE.
+4. Run a console Kafka producer for `task4`:
+
+```shell
+docker exec -it kafka3 kafka-console-producer.sh --bootstrap-server kafka3:19092 --topic task2
+```
+
+5. Input JSONs conforming to the above format and see the corresponding DTOs printed to the console.
+
+### Tests
+
+See `PersonSerDeTest` in the test source set.
